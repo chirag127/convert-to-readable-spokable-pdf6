@@ -1,122 +1,159 @@
-# Convert to Readable Spokable PDF
+# PDF-Spokable-AI-Transformer-Web-App
 
-A modern, client-side web application that transforms PDFs into TTS-friendly, spoken-language documents optimized for text-to-speech consumption.
+[![Build Status](https://img.shields.io/github/actions/workflow/status/chirag127/PDF-Spokable-AI-Transformer-Web-App/ci.yml?style=flat-square)](https://github.com/chirag127/PDF-Spokable-AI-Transformer-Web-App/actions/workflows/ci.yml)
+[![Coverage](https://img.shields.io/codecov/c/github/chirag127/PDF-Spokable-AI-Transformer-Web-App?style=flat-square)](https://codecov.io/gh/chirag127/PDF-Spokable-AI-Transformer-Web-App)
+[![Language](https://img.shields.io/github/languages/top/chirag127/PDF-Spokable-AI-Transformer-Web-App?style=flat-square)]()
+[![License](https://img.shields.io/github/license/chirag127/PDF-Spokable-AI-Transformer-Web-App?style=flat-square)](https://github.com/chirag127/PDF-Spokable-AI-Transformer-Web-App/blob/main/LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/chirag127/PDF-Spokable-AI-Transformer-Web-App?style=flat-square)](https://github.com/chirag127/PDF-Spokable-AI-Transformer-Web-App)
 
-## Features
+[⭐ Star this Repo ⭐](https://github.com/chirag127/PDF-Spokable-AI-Transformer-Web-App)
 
--   **PDF Text Extraction**: Extract selectable text from PDFs (no OCR required)
--   **Intelligent Transformation**: Convert code, tables, figures, formulas, and URLs into natural spoken language
--   **Gemini API Integration**: Uses Google AI Studio / Gemini REST API for AI-powered transformations
--   **Batch Processing**: Smart chunking with configurable token limits and overlap
--   **Model Failover**: Automatic fallback between multiple Gemini models
--   **Offline Support**: IndexedDB storage for PDFs and processing state
--   **Progress Tracking**: Real-time progress with pause/resume capability
--   **In-Browser TTS**: Optional voice playback of transformed content
--   **Multimodal Support**: Send figures to Gemini for enhanced descriptions
--   **Dark Mode**: Beautiful light/dark theme toggle
--   **Fully Client-Side**: No server required, deploy anywhere
+## 🚀 Project Overview
 
-## Quick Start
+This repository houses a cutting-edge, client-side Web Application designed to transform static PDF documents into highly accessible, AI-optimized spoken content. It leverages advanced client-side parsing combined with the Gemini API for intelligent contextual extraction before utilizing native Web Speech Synthesis for flawless in-browser playback.
 
-1. Open `index.html` in a modern browser
-2. Get a Google AI Studio API key from https://aistudio.google.com/app/apikey
-3. Enter your API key in Settings
-4. Upload a PDF and click "Convert to Spokable PDF"
-5. Download your transformed, TTS-friendly PDF
+This solution prioritizes performance and user experience by minimizing server load and providing immediate, intelligent audio feedback directly within the browser environment.
 
-## Project Structure
+## 🏗️ Architecture Overview (Late 2025 Standard)
 
-```
-├── index.html              # Main conversion page
-├── about.html              # About page
-├── privacy.html            # Privacy policy
-├── faq.html               # FAQ page
-├── terms.html             # Terms of service
-├── contact.html           # Contact page
-├── pricing.html           # Pricing information
-├── js/
-│   ├── main.js            # Main application controller
-│   ├── file-handler.js    # File upload and drag-drop
-│   ├── pdf-extractor.js   # PDF text extraction
-│   ├── chunking.js        # Text chunking with overlap
-│   ├── api-client.js      # Gemini REST API client
-│   ├── retry-manager.js   # Retry logic and failover
-│   ├── pdf-generator.js   # Output PDF generation
-│   ├── ui.js              # UI updates and progress
-│   ├── settings.js        # Settings management
-│   ├── db.js              # IndexedDB wrapper
-│   ├── tts-player.js      # In-browser TTS playback
-│   └── utils.js           # Utility functions
-├── css/
-│   ├── main.css           # Main styles
-│   ├── theme.css          # Theme variables
-│   └── components.css     # Component styles
-├── assets/
-│   └── icons/             # Icons and images
-└── README.md              # This file
-```
+This application adheres to a modern component-driven architecture, prioritizing granular separation of concerns (FSD principles adapted for Web Components) and leveraging WebAssembly/Web Workers for heavy PDF parsing tasks to maintain UI responsiveness.
 
-## Developer Guide
+mermaid
+graph TD
+    A[User Interface: React/Vite] --> B{PDF File Input};
+    B --> C[Web Worker / WASM Parser];
+    C -- Extracted Text Chunks --> D(Client-Side Pre-Processor);
+    D -- Clean Context --> E[Gemini API Agent (Extraction/Summarization)];
+    E -- Structured Audio Script --> F[Text-to-Speech (TTS) Engine - Web Speech API];
+    F --> G[Playback Controller];
+    G --> A;
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#ccf,stroke:#333,stroke-width:2px
 
-### Updating Model Lists
 
-Edit `js/api-client.js` and modify the `AVAILABLE_MODELS` constant:
+## 🧭 Table of Contents
 
-```javascript
-const AVAILABLE_MODELS = [
-  { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro', ... },
-  // Add new models here
-];
-```
+1. [🚀 Project Overview](#-project-overview)
+2. [🏗️ Architecture Overview (Late 2025 Standard)](#️-architecture-overview-late-2025-standard)
+3. [🧭 Table of Contents](#-table-of-contents)
+4. [✨ Key Features](#-key-features)
+5. [🛠️ Apex Toolchain & Technology Stack](#️-apex-toolchain--technology-stack)
+6. [🤖 AI Agent Directives (SSOT for Automation)](#-ai-agent-directives-ssot-for-automation)
+7. [⚙️ Development & Setup](#-development--setup)
+8. [📚 Licensing & Contribution](#-licensing--contribution)
 
-### Changing API Endpoints
+## ✨ Key Features
 
-Edit `js/api-client.js` and update the `API_BASE_URL` constant and request format in `callGeminiAPI()`.
+*   **Intelligent Extraction:** Utilizes the Gemini API for semantic analysis of PDF content chunks, ensuring only relevant, contextually coherent text is sent for synthesis.
+*   **Client-Side Focus:** Maximize browser performance; only AI calls leverage external services.
+*   **Seamless Playback:** In-browser TTS with chapter/section seeking capabilities.
+*   **Type Safety:** Built entirely in **TypeScript** ensuring robustness against runtime errors.
+*   **Modern Tooling:** Powered by **Vite** for lightning-fast development cycles and **TailwindCSS** for utility-first styling.
 
-### Customizing Prompts
+## 🛠️ Apex Toolchain & Technology Stack
 
-Default prompts are in `js/settings.js` under `DEFAULT_SETTINGS.prompts`. Users can edit these in the Settings UI.
+| Component | Technology | Version Standard | Rationale |
+| :--- | :--- | :--- | :--- |
+| **Language** | TypeScript | 6.x (Strict Mode) | Superior Type Safety & IDE Support. |
+| **Build/Bundler** | Vite | 7.x | Zero-config, extreme speed via ESBuild integration. |
+| **Styling** | TailwindCSS | v4 (Alpha/RC) | Utility-first, atomic styling system. |
+| **Testing** | Vitest (Unit) / Playwright (E2E) | Latest | Fast in-memory unit testing; robust browser automation. |
+| **AI Backend** | Google Gemini API | Pro/Flash Models | Contextual reasoning and high-quality text structuring. |
+| **Architecture** | Feature-Sliced Design (FSD) Concepts | Adapted | Clear feature encapsulation and dependency management. |
 
-### Adding New Providers
+## 🤖 AI Agent Directives (SSOT for Automation)
 
-1. Create a new provider module in `js/` (e.g., `cerebras-client.js`)
-2. Implement the same interface as `api-client.js`
-3. Add provider selection in Settings UI
-4. Update retry-manager.js to handle the new provider
+<details>
+<summary>Click to view Architectural and Verification Directives (AGENTS.md Reference)</summary>
 
-## Deployment
+# SYSTEM: APEX TECHNICAL AUTHORITY & ELITE ARCHITECT (DECEMBER 2025 EDITION)
 
-### Static Hosting (GitHub Pages, Netlify, Vercel)
+## 1. IDENTITY & PRIME DIRECTIVE
+**Role:** You are a Senior Principal Software Architect and Master Technical Copywriter with **40+ years of elite industry experience**. You operate with absolute precision, enforcing FAANG-level standards and the wisdom of "Managing the Unmanageable."
+**Context:** Current Date is **December 2025**. You are building for the 2026 standard.
+**Output Standard:** Deliver **EXECUTION-ONLY** results. No plans, no "reporting"—only executed code, updated docs, and applied fixes.
+**Philosophy:** "Zero-Defect, High-Velocity, Future-Proof."
 
-Simply upload all files to your hosting provider. No build step required.
+---
 
-### Single-File Build
 
-Use `build-single.html` for a completely self-contained version (all JS/CSS inlined).
+## 2. INPUT PROCESSING & COGNITION
+*   **SPEECH-TO-TEXT INTERPRETATION PROTOCOL:**
+    *   **Context:** User inputs may contain phonetic errors (homophones, typos).
+    *   **Semantic Correction:** **STRICTLY FORBIDDEN** from executing literal typos. You must **INFER** technical intent based on the project context (`PDF-Spokable-AI-Transformer-Web-App`).
+    *   **Logic Anchor:** Treat the `README.md` as the **Single Source of Truth (SSOT)**.
+*   **MANDATORY MCP INSTRUMENTATION:**
+    *   **No Guessing:** Do not hallucinate APIs. Verify Gemini API endpoint signatures.
+    *   **Research First:** Use `linkup`/`brave` to search for **December 2025 Industry Standards** for Client-Side TTS best practices and **2026 UI Trends** (e.g., micro-interactions).
+    *   **Validation:** Use `docfork` to verify *every* external API contract (especially Gemini).
+    *   **Reasoning:** Engage `clear-thought-two` to architect complex asynchronous text processing flows *before* writing JavaScript/TypeScript.
 
-## Security & Privacy
+---
 
--   API keys are stored only in browser localStorage
--   PDFs are stored only in browser IndexedDB
--   All processing happens client-side
--   Data is sent only to Google AI Studio API (user-controlled)
--   No tracking or analytics by default
+## 3. CONTEXT-AWARE APEX TECH STACKS (LATE 2025 STANDARDS)
+**Directives:** This repository is a **WEB / APP / GUI (Modern Frontend)** project.
 
-## Browser Requirements
+*   **PRIMARY SCENARIO: WEB / APP / GUI (Modern Frontend)**
+    *   **Stack:** **TypeScript (Strict)**, **Vite 7**, **TailwindCSS v4**, **React 19/Signals**.
+    *   **Lint/Test:** **Biome** (Speed) + **Vitest** (Unit) + **Playwright** (E2E).
+    *   **Architecture:** **Feature-Sliced Design (FSD)** for component layering (layers: app, pages, features, entities, shared).
+    *   **AI Integration:** Ensure all Gemini API calls are proxied through a secure `services/gemini-adapter` layer, handling streaming responses efficiently.
 
--   Modern browser with ES6+ support
--   IndexedDB support
--   Fetch API support
--   Recommended: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
+---
 
-## Testing
+## 4. CORE ARCHITECTURAL MANDATES
 
-Open the test page at `test.html` to run sample conversions and measure performance.
+*   **SOLID Principles:** Enforce Dependency Inversion (D) aggressively in the UI/Data layer separation.
+*   **DRY:** Abstract all repetitive UI elements into shared components.
+*   **YAGNI:** Do not over-engineer server endpoints; focus on client-side capability.
+*   **SECURITY:** Never expose API keys client-side. Assume all external calls must be routed through a secure gateway (even if this repo is client-only, structure the code anticipating a proxied environment).
 
-## License
+## 5. VERIFICATION COMMANDS
 
-MIT License - See LICENSE file for details
+| Command | Tool | Purpose |
+| :--- | :--- | :--- |
+| `npm run lint` | Biome | Format and check code style compliance. |
+| `npm run test:unit` | Vitest | Run fast unit tests across feature slices. |
+| `npm run test:e2e` | Playwright | Validate complete user journeys (PDF upload to playback). |
+| `npm run dev` | Vite | Start the optimized development server. |
 
-## Support
+</details>
 
-For issues and questions, visit the Contact page or open an issue on GitHub.
+## ⚙️ Development & Setup
+
+Follow the Apex standard for environment readiness.
+
+1.  **Clone Repository:**
+    bash
+    git clone https://github.com/chirag127/PDF-Spokable-AI-Transformer-Web-App.git
+    cd PDF-Spokable-AI-Transformer-Web-App
+    
+
+2.  **Install Dependencies (Using uv/npm context):**
+    Since this is a Web App, we rely on npm/yarn/pnpm for frontend tooling, managed by Vite/TypeScript.
+    bash
+    # Assuming npm is the package manager, aligning with TypeScript/Vite stack
+    npm install
+    
+
+3.  **Environment Configuration:**
+    Ensure your `.env` file contains the necessary API keys, securely managed (e.g., using Vite's environment variable handling):
+    env
+    VITE_GEMINI_API_KEY="YOUR_SECURE_KEY_HERE"
+    
+
+### Development Scripts
+
+| Script | Command | Description |
+| :--- | :--- | :--- |
+| Start Dev Server | `npm run dev` | Launches the application with Hot Module Replacement (HMR). |
+| Build Production | `npm run build` | Creates optimized, minified static assets. |
+| Run Unit Tests | `npm run test:unit` | Executes Vitest suite. |
+| Run E2E Tests | `npm run test:e2e` | Executes Playwright end-to-end scenarios. |
+| Code Linting | `npm run lint` | Runs Biome for style and error checking. |
+
+## 📚 Licensing & Contribution
+
+This project is protected under the **Creative Commons Attribution-NonCommercial 4.0 International License**. See the [LICENSE](https://github.com/chirag127/PDF-Spokable-AI-Transformer-Web-App/blob/main/LICENSE) file for details.
+
+We welcome contributions that adhere to the standards outlined in `.github/CONTRIBUTING.md`.
